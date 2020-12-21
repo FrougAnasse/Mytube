@@ -1,0 +1,12 @@
+.cards{
+    width:100%;
+    height:auto;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cards.move{
+    margin-left: 200px;
+    width:calc(100% - 200px);
+}

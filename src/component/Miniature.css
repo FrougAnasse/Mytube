@@ -1,0 +1,42 @@
+.cardMiniature{
+    width:350px;
+    height:300px;
+    margin:20px 20px 20px 1rem;
+    box-shadow: 0 0 10px #333;
+}
+
+.cardMiniature .div-video{
+    width:100%;
+    height:200px;
+} 
+.cardMiniature .div-video video{
+    width:100%;
+    height:100%;
+}
+
+.cardMiniature .div-text {
+    width:100%;
+    height:30%;
+    color:rgb(253, 245, 248);
+}
+
+.cardMiniature .div-text h3{
+    font-size: 30px;
+    margin-left:5px;
+    
+}
+
+.cardMiniature .div-text .info{
+    display: flex;
+    flex-direction: column;
+    margin:5px 10px 15px 10px;
+}
+
+.cardMiniature .div-text .info i{
+    position:relative;
+    font-size: 40px;
+    width:40px;
+    top:-50px;
+    left:280px;
+    cursor:pointer;
+}
