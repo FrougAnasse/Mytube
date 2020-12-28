@@ -56,6 +56,7 @@
 
 .cards-form form .element input#input-file{
     display: none;
+    width:20%;
 }
 
 .cards-form form .element input#input-file + label{
@@ -63,10 +64,23 @@
     padding:0px;
     border-radius: 5px;
     border:2px solid rgb(182, 61, 61);
-    width:150px;
+   
+    font-size: 20px;
     cursor: pointer;
 }
 
+.cards-form form .element span{
+    text-align: center;
+}
+
+.cards-form form .element button{
+    background: rgb(182, 61, 61);
+    padding: 10px 15px;
+    border:1px solid rgb(110, 38, 38);
+    outline: none;
+    border-radius: 5px;
+
+}
 
 @media screen and (max-width:1220px){
     .cards-form h2{

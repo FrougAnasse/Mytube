@@ -8,18 +8,18 @@ import { firebaseInitApp} from '../base'
 export default class Login extends Component {
     
     state={
-        uid:null
+        uid:null,
+        name:null
     }
     
 
 
     handleAuth = async authData=>{
-        
-
         this.setState({
-            uid: authData.user.uid
+            uid: authData.user.uid,
+            name:authData.user.displayName
         })
-      this.props.getUser(this.state.uid)
+      this.props.getUser(this.state.uid,this.state.name)
     }
 
 
@@ -32,7 +32,6 @@ export default class Login extends Component {
     }
 
     logout = async ()=>{
-        console.log('déconexion')
         await firebase.auth().signOut()
         this.setState({
             uid:null         

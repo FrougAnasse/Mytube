@@ -5,7 +5,6 @@ import './Miniature.css'
 export default function Miniature({id,name,auteur , url,vue,like,addVue,isAlreadyLike}) {
 
     let pouce= <i  className="far fa-thumbs-up"></i>
-    console.log(isAlreadyLike(id))
     if(isAlreadyLike(id)){
         pouce= <i  className="fas fa-thumbs-up"></i>
     }

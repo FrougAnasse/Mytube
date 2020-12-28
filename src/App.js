@@ -40,6 +40,7 @@ class App extends React.Component{
 
   handleSearch=(value)=>{
     this.setState({search:value})
+    
   }
 
   disconnecte=()=>{
@@ -47,7 +48,6 @@ class App extends React.Component{
   }
 
   handleUser=(value)=>{
-    const id=this.state.user.uid
     this.setState({user:value})
   }
   
@@ -66,10 +66,12 @@ class App extends React.Component{
     let Already=false;
     if(mytube!==undefined){
       Object.keys(mytube.video[keyVideo].likeBy || {})
-            .map(key =>{
-                if(key===this.state.user.uid){
-                  if(mytube.video[keyVideo].likeBy[this.state.user.uid]===1)
-                  Already=true
+            .forEach(key =>{
+                if(key===this.state.user.uid)
+                {
+                  if(mytube.video[keyVideo].likeBy[this.state.user.uid]===1){
+                     Already=true
+                  }
                 }
             })
 
@@ -78,11 +80,10 @@ class App extends React.Component{
   }
 
   handleLike = (key) => {
-    console.log(this.state.user.uid!==undefined)
+  
     if(this.state.user.uid!==undefined ){
       const mytube= {...this.state.mytube}
-      console.log(key)
-      console.log(this.isAlreadyLike(key))
+  
    
     if( mytube.video[key].likeBy===undefined){
           mytube.video[key].likeBy={};
@@ -102,11 +103,11 @@ class App extends React.Component{
 
 
   getPseudo=(uid)=>{
-    console.log('in pseudo '+uid)
+
     const Testuser={...this.state.mytube.user}
     let pseudo=''
     Object.keys(Testuser || {})   //on vérifie que le compte n'a pas déja été créer
-        .map(key => {
+        .forEach(key => {
                       if((Testuser[key].uid===uid)){
                         pseudo=Testuser[key].pseudo
                       }
@@ -115,47 +116,34 @@ class App extends React.Component{
     return pseudo
   }
 
-  addNewUser= async (uid)=>{
-    const Testuser={...this.state.mytube.user}
-    console.log('in add new user '+uid)
+  addNewUser= async (uid,pseudo)=>{
     const mytube={...this.state.mytube}
-    let pseudoUid=this.getPseudo(uid)
-    console.log('new user pseudo trouver'+pseudoUid)
-    
-    if(pseudoUid===''){
-        pseudoUid= prompt("Veuillez rentrer votre pseudo attention il est      définitive !")
-        console.log('prompt======'+pseudoUid)
-    }
 
     const newUser={
       uid:uid,
-      pseudo:pseudoUid
+      pseudo:pseudo
     }
+    console.log(newUser.pseudo)
+ 
     mytube.user[`user-${Date.now()}`]=newUser
     this.setState({mytube})
-    console.log(newUser)
     return newUser;
   }
 
-  getUser=(uid)=>{
-    console.log('in get user '+uid)
+  getUser=(uid,pseudo)=>{
+
     const Testuser={...this.state.mytube.user}
-    console.log('test  ')
-    console.log(Testuser)
     let newUser={}
     Object.keys(Testuser)   //on vérifie que le compte n'a pas déja été créer
-        .map(key => {
+        .forEach(key => {
                   if((Testuser[key].uid===uid)){
                     newUser=Testuser[key];
                   }
              }
         );
     if(newUser.uid===undefined){    //si aucun compte n'a été ctrouver on en créer un
-     console.log('new new new new')
-      newUser=this.addNewUser(uid)
+      newUser=this.addNewUser(uid,pseudo)
     }
-    console.log(newUser)
-    const user={...this.state.user}   //mise à jour du sate user local 
     this.setState({user:newUser})
   }
 
@@ -164,7 +152,7 @@ class App extends React.Component{
     const mytube={...this.state.mytube}
     const NewVideo={
       auteur:this.state.user.pseudo,
-      comment:'',
+      comment:{},
       like:0,
       likeBy:{},
       nom:nom,
@@ -174,7 +162,23 @@ class App extends React.Component{
     }
     mytube.video[`video${Date.now()}`]=NewVideo
     this.setState({mytube})
-    console.log(mytube)
+
+  }
+
+  addComment=(key,comment)=>{
+    if(this.state.user.uid!==undefined ){
+      const mytube= {...this.state.mytube}
+      if( mytube.video[key].comment===undefined ||mytube.video[key].comment===''){
+          mytube.video[key].comment={};
+      }
+
+      const NewComment={
+       auteur:this.state.user.pseudo,
+       comment:comment
+     }
+      mytube.video[key].comment[Date.now()]=NewComment
+      this.setState({mytube})
+    }
   }
 
   render(){
@@ -199,16 +203,16 @@ class App extends React.Component{
           </Nav>
         
          <Route path='/' exact 
-                render={()=><AdminVideo state={this.state} 
+                render={()=><AdminVideo
+                            state={this.state} 
                             stateMytube={this.state.mytube.video} 
                             handleVue={this.handleVue}
                             isAlreadyLike={this.isAlreadyLike}
-                            stateMytube={this.state.mytube.video} 
                             refCard={this.refCard}
                           />
                         }/>
         
-         <Route path='/video/:slug' exact 
+         <Route path='/videoSelect/:slug' exact 
                 render={()=><AdminVideoSelected 
                         state={this.state}
                         isAlreadyLike={this.isAlreadyLike}
@@ -216,6 +220,8 @@ class App extends React.Component{
                         handleLike={this.handleLike}
                         refCardVideo={this.refCardVideo}
                         refCard={this.refCard}
+                        addComment={this.addComment}
+                        handleVue={this.handleVue}
                         />
                         }/> 
 
@@ -228,10 +234,12 @@ class App extends React.Component{
                         }/>
           
           <Route path='/video/likes' exact 
-                render={()=><AdminVideoJaime state={this.state} 
+                render={()=><AdminVideoJaime 
+                              state={this.state} 
                               stateMytube={this.state.mytube.video} 
                               refCard={this.refCard}
-                              isAlreadyLike={this.isAlreadyLike}/> 
+                              isAlreadyLike={this.isAlreadyLike}
+                              typeJaime={true}/> 
                         }/>
           
           

@@ -33,7 +33,7 @@ export const AdminVideo = ({stateMytube,handleVue,state,isAlreadyLike,refCard}) 
                 .map(items =>
                 {
                     let test=''
-                    const path=`video/${items}`
+                    const path=`videoSelect/${items}`
 
                     trieParNom(stateMytube[items].nom) 
                     ?  test=

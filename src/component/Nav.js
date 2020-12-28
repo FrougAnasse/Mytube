@@ -17,9 +17,21 @@ const Nav = ({state,stateMytube,handleSearch,handleUser,getUser,getPseudo,discon
 
      const [videoSelect,handleChangeSelect]=useState('')
 
+    const getVideoByName=(name)=>{
+        let id=null
+        Object.keys(stateMytube || {} )
+               .forEach(key =>  {
+                        if(name===stateMytube[key].nom){
+                            id=key
+                        }
+               }
+            )
+     
+        return id;
+    }
+
 
      const handleSubmit=(videoSelect)=>{
-         console.log(videoSelect)
          handleSearch(videoSelect)
      } 
 
@@ -62,6 +74,8 @@ const Nav = ({state,stateMytube,handleSearch,handleUser,getUser,getPseudo,discon
              divCenter.current.classList.toggle('active');
              divEnd.current.classList.toggle('active');
          })
+
+         // eslint-disable-next-line react-hooks/exhaustive-deps
      }, [])
 
     return (
@@ -72,7 +86,7 @@ const Nav = ({state,stateMytube,handleSearch,handleUser,getUser,getPseudo,discon
                 <h2>MyTube</h2>
             </div>
 
-            <div className='info' ref={info}>
+            <div className='nav-info' ref={info}>
                 <div className='start cloneStart' ref={clone}>
                     <i className="far fa-play-circle"></i>
                     <h2>MyTube</h2>
@@ -102,9 +116,9 @@ const Nav = ({state,stateMytube,handleSearch,handleUser,getUser,getPseudo,discon
                 </div>
 
                 <div className="portfolio">
-                            <p className="liens"   onClick={()=>window.open('https://portfolio-froug-anasse.netlify.app')}>
+                            <span className="liens"   onClick={()=>window.open('https://portfolio-froug-anasse.netlify.app')}>
                                Vers portfolio
-                            </p>
+                            </span>
                 </div>
             </div>
 
@@ -124,7 +138,12 @@ const Nav = ({state,stateMytube,handleSearch,handleUser,getUser,getPseudo,discon
                         <datalist id="video">   
                             {allVideo}
                         </datalist>
-                    <i className="fas fa-search" ref={btnSearch} onClick={()=>handleSubmit(videoSelect)}></i>
+
+                    <Link  style={{textDecoration:'none',color:'#000'}} to={`/video/${getVideoByName(videoSelect)}`}>
+                    <i className="fas fa-search" ref={btnSearch} onClick={()=>{handleSubmit(videoSelect)
+                        
+                    }}></i>
+                    </Link>
                 </form>
             </div>
 

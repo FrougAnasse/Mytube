@@ -50,7 +50,11 @@ export default function AdminUpload({state,stateMytube,addVideo,refCard}) {
                        
                         <input id="input-file" type="file" 
                               onChange={(e)=>changeFichier(e.target.files[0])}/>
-                        <label htmlFor="input-file">Votre video</label>
+                        <label htmlFor="input-file"><i className="fas fa-upload"></i>  Choisissez une video</label>
+                        <span>
+                            <strong>Vote fichier: </strong>
+                            <span id="file-name">{fichier.name}</span>
+                        </span>
                     </div>
     
                     <div className="element">
@@ -60,7 +64,7 @@ export default function AdminUpload({state,stateMytube,addVideo,refCard}) {
                     </div>
     
                     <div className="element">
-                        <label>Les tags de la video</label>
+                        <label>Le tags de la video</label>
                         <input type="text"  value={tags} onChange={(e)=>changeTags(e.target.value) }/>
                     </div>
     

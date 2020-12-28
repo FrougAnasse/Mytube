@@ -21,7 +21,7 @@ header .start  h2{
     font-size: 30px;
 }
 
-header .info{
+header .nav-info{
     position:fixed;
     width:210px;
     height: 100vh;
@@ -29,14 +29,13 @@ header .info{
     display: none;
     flex-direction: column;
     background:  #d15b5b;
-
 }
 
-header .info.active{
+header .nav-info.active{
     display: flex!important;
 }
 
-header .info .cloneStart{
+header .nav-info .cloneStart{
     height:10%;
     margin-top:27px;
     display: flex;
@@ -45,13 +44,13 @@ header .info .cloneStart{
 }
 
 
-header .info .list {
-    height:80vh;
+header .nav-info .list {
+    height:calc(70vh - 10%);
     display: flex;
     justify-content: center;
     align-self: center;
 }
-header .info ul{
+header .nav-info .list ul{
     height:100%;
     text-align:center;
     font-size:30px;
@@ -61,13 +60,18 @@ header .info ul{
     justify-content: space-evenly;
 }
 
-header .info ul li{
+header .nav-info ul li{
     padding:20px;
 }
 
-header .info .portfolio{
+header .nav-info .portfolio{
+    height:calc(100vh - 70vh - 10% );
     text-align: center;
     font-size: 30px;
+    justify-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -75,7 +79,7 @@ header .center{
     margin-right: 0px;
     display: flex;
     align-items: center;
-    width:40%
+    width:40%;
 }
 
 header .center form{
@@ -94,6 +98,7 @@ header .center form input{
 }
 header .center form .fas{
     font-size: 40px;
+    
 }
 
 
@@ -104,11 +109,12 @@ header .end{
 }
 
 @media screen and (max-width:800px){
+    header .center{
+        width:0%;
+    }
+
     header .center form input{
         display:none;
-    }
-    header .center form .fas{
-        margin:auto;
     }
 
     header .start.active{
@@ -139,11 +145,45 @@ header .end{
      header .end{
          display:none;
       }
-      header .center form .fas{
+      header .center form a {
         margin:auto;
     }
     header .center{
         width:95%;
         margin-right:5%;
     }
+}
+
+@media screen and (max-height:600px){
+    header .nav-info .cloneStart{
+        margin-top:15px;
+    }
+    
+    header .nav-info .list {
+        height:calc(70vh - 10% + 15px);
+    }
+    header .nav-info .list ul{
+        height:100%;
+        text-align:center;
+        font-size:30px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content:flex-end;
+    }
+    
+    header .nav-info ul li{
+        padding:20px;
+    }
+    
+    header .nav-info .portfolio{
+        height:50px;
+        text-align: center;
+        font-size: 30px;
+        justify-self: flex-end;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
 }
