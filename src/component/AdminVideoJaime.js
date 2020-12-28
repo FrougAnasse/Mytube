@@ -1,5 +1,5 @@
 import React from 'react'
-import {useParams} from 'react-router-dom'
+
 
 import './Nav.css'
 import Miniature from './Miniature'
@@ -7,17 +7,23 @@ import './AdminVideo.css'
 
 import {Link} from 'react-router-dom'
 
-export const AdminVideoJaime = ({state,stateMytube,refCard,isAlreadyLike}) => {
+export const AdminVideoJaime = ({state,stateMytube,refCard,isAlreadyLike,typeJaime}) => {
 
-   
-    
-    const SelectedVideo=Object.keys(stateMytube || {})
+    if(state.user.pseudo===undefined || state.user.pseudo===''){
+             return <div className='cards-form'>
+                    <h2>Connectez-vous pour pouvoir voir vos video j'aime !</h2>
+                    </div>
+    }else{
+        return (
+            <div className='cards' ref={refCard}>
+                {Object.keys(stateMytube || {})
                 .map(items =>
                     {
                         if(stateMytube[items].likeBy!==undefined){
                             if(stateMytube[items].likeBy[state.user.uid]!==undefined && stateMytube[items].likeBy[state.user.uid]===1){
-                                const path=`/video/${items}`
-                                let result=
+                                let result=''
+                                const path=`/videoSelect/${items}`
+                               result=
                                 <Link key={path}  style={{textDecoration:'none',color:'#000'}}
                                          to={path} >
                                         <Miniature 
@@ -33,21 +39,12 @@ export const AdminVideoJaime = ({state,stateMytube,refCard,isAlreadyLike}) => {
                                             isAlreadyLike={isAlreadyLike}
                                         />
                                 </Link>
-                                
-                                return result
+
+                            return result
                             }
                         }
-                })
-
-  
-    if(state.user.pseudo===undefined || state.user.pseudo===''){
-             return <div className='cards-form'>
-                    <h2>Connectez-vous pour pouvoir voir vos video j'aime !</h2>
-                    </div>
-    }else{
-        return (
-            <div className='cards' ref={refCard}>
-            { SelectedVideo}
+                        return 0
+                })}
             </div>
         )
     }
